@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import io.github.kdbrian.pseudo.ui.theme.PseudoTheme
+import io.github.kdbrian.pseudo.ui.theme.appBlue
 import io.github.kdbrian.pseudo.ui.theme.appDark
 import io.github.kdbrian.pseudo.ui.theme.appRed
 import io.github.kdbrian.pseudo.ui.theme.freckleface
@@ -36,6 +37,14 @@ import io.github.kdbrian.pseudo.ui.theme.fredoka
 val RedDarkBackgroundBrush = Brush.verticalGradient(
     colors = listOf(appRed, appDark),
 )
+
+val PremiumColorsBrush = Brush.verticalGradient(
+    colors = listOf(appRed, appBlue)
+)
+
+val LocalPremiumBrush = staticCompositionLocalOf {
+    PremiumColorsBrush
+}
 
 val LocalDefaultBackgroundBrush = staticCompositionLocalOf {
     Brush.verticalGradient(colors = listOf(Color.White, Color.Black))
@@ -59,7 +68,8 @@ fun App(
     CompositionLocalProvider(
         LocalDefaultBackgroundBrush provides RedDarkBackgroundBrush,
         LocalFontFamily provides fredoka,
-        LocalTextStyle provides TextStyle()
+        LocalTextStyle provides TextStyle(),
+        LocalPremiumBrush provides PremiumColorsBrush
     ) {
 
 
