@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.staggeredgrid.LazyHorizontalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.rounded.Check
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -36,6 +38,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -51,7 +54,10 @@ import kotlin.random.Random
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SearchScreen(modifier: Modifier = Modifier) {
+fun SearchScreen(
+    modifier: Modifier = Modifier,
+    onRecentsCleared: () -> Unit = {},
+) {
 
     val (query, setQuery) = remember { mutableStateOf("") }
     var selectedTopic by remember { mutableIntStateOf(0) }
@@ -104,7 +110,13 @@ fun SearchScreen(modifier: Modifier = Modifier) {
                         color = Color.White
                     )
                 )
-            }
+            },
+            singleLine = true,
+            textStyle = LocalTextStyle.current.copy(
+                color = Color.White,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Normal
+            )
         )
 
         Spacer(Modifier.height(32.dp))
@@ -123,11 +135,13 @@ fun SearchScreen(modifier: Modifier = Modifier) {
             )
 
 
-            Image(
-                painter = painterResource(R.drawable.clear),
-                modifier = Modifier.size(30.dp),
-                contentDescription = null
-            )
+            IconButton(onClick = onRecentsCleared) {
+                Image(
+                    painter = painterResource(R.drawable.clear),
+                    modifier = Modifier.size(30.dp),
+                    contentDescription = null
+                )
+            }
 
         }
 
@@ -135,20 +149,29 @@ fun SearchScreen(modifier: Modifier = Modifier) {
 
         Column {
             repeat(6) {
-                Text(
-                    text = LoremIpsum(Random.nextInt(6)).values.joinToString(),
-                    style = LocalTextStyle.current.copy(
-                        color = Color.LightGray,
-                        fontSize = 14.sp
-                    )
-                )
+                if (it % 2 == 0) {
+                    RecentItem(
+                        action = {
+                            Text(
+                                text = "Even",
+                                style = LocalTextStyle.current.copy(
+                                    color = Color.Red,
+                                    fontStyle = FontStyle.Italic,
+                                    fontWeight = FontWeight.Normal,
+                                    fontSize = 12.sp
+                                )
+                            )
+                        }
 
+                    )
+                } else
+                    RecentItem()
                 Spacer(Modifier.height(7.dp))
             }
         }
 
 
-        Spacer(Modifier.height(32.dp))
+        Spacer(Modifier.height(12.dp))
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -180,7 +203,9 @@ fun SearchScreen(modifier: Modifier = Modifier) {
         }
 
         LazyHorizontalStaggeredGrid(
-            rows = StaggeredGridCells.Fixed(3)
+            rows = StaggeredGridCells.Fixed(3),
+            modifier = Modifier.fillMaxWidth(),
+            horizontalItemSpacing = 4.dp
         ) {
             items(count = 10) {
                 FilterChip(
@@ -200,14 +225,15 @@ fun SearchScreen(modifier: Modifier = Modifier) {
                             }
 
                             Text(
-                                text = LoremIpsum(Random.nextInt(4)).values.joinToString(),
+                                text = LoremIpsum(Random.nextInt(1, 4)).values.joinToString(),
                                 style = LocalTextStyle.current.copy(
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Light
                                 )
                             )
                         }
-                    }
+                    },
+                    modifier = Modifier.wrapContentSize()
                 )
             }
         }
