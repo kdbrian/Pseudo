@@ -43,6 +43,18 @@ val freckleface by lazy {
         Font(resId = R.font.frecklefaceregular, style = FontStyle.Normal)
     )
 }
+val ubuntu by lazy {
+    FontFamily(
+        Font(resId = R.font.ubuntubold, style = FontStyle.Normal),
+        Font(resId = R.font.ubuntulight, style = FontStyle.Normal),
+        Font(resId = R.font.ubuntuitalic, style = FontStyle.Normal),
+        Font(resId = R.font.ubuntumedium, style = FontStyle.Normal),
+        Font(resId = R.font.ubunturegular, style = FontStyle.Normal),
+        Font(resId = R.font.ubuntubolditalic, style = FontStyle.Normal),
+        Font(resId = R.font.ubuntulightitalic, style = FontStyle.Normal),
+        Font(resId = R.font.ubuntumediumitalic, style = FontStyle.Normal),
+    )
+}
 
 
 // Set of Material typography styles to start with

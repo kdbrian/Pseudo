@@ -19,7 +19,7 @@ fun NestedRootName(
     name: String = "pseudonotes.dev",
 ) {
     Text(
-        text = name,
+        text = if (name.length > 15) "${name.substring(0, 15)}..." else name,
         modifier = modifier
             .background(shape = RoundedCornerShape(16.dp), color = greishWhite)
             .padding(8.dp),

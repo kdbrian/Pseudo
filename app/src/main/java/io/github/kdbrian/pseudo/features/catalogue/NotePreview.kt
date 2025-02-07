@@ -26,6 +26,7 @@ import io.github.kdbrian.pseudo.ui.theme.PseudoTheme
 import io.github.kdbrian.pseudo.ui.theme.appDangerRed
 import io.github.kdbrian.pseudo.ui.theme.appGreen
 import io.github.kdbrian.pseudo.ui.theme.appYellow
+import io.github.kdbrian.pseudo.ui.theme.ubuntu
 import java.util.Random
 import java.util.UUID
 
@@ -119,8 +120,9 @@ fun NotePreview(
         Text(
             text = LoremIpsum(24).values.joinToString(),
             style = LocalTextStyle.current.copy(
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Light
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Light,
+                fontFamily = ubuntu
             )
         )
 
