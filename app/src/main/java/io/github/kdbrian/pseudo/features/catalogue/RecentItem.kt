@@ -34,9 +34,9 @@ fun RecentItemLoading(modifier: Modifier = Modifier) {
         modifier = modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(4.dp)
     ){
-        Spacer(Modifier.fillMaxWidth(1f).height(8.dp).background(color = Color.LightGray, shape = RoundedCornerShape(6.dp)).padding(4.dp))
+        Spacer(Modifier.fillMaxWidth(1f).height(12.dp).background(color = Color.LightGray, shape = RoundedCornerShape(6.dp)).padding(4.dp))
 
-        Spacer(Modifier.fillMaxWidth(0.60f).height(8.dp).background(color = Color.LightGray, shape = RoundedCornerShape(6.dp)).padding(4.dp))
+        Spacer(Modifier.fillMaxWidth(0.60f).height(12.dp).background(color = Color.LightGray, shape = RoundedCornerShape(6.dp)).padding(4.dp))
     }
 }
 
