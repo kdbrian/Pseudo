@@ -1,22 +1,33 @@
 package io.github.kdbrian.pseudo.features.saves
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import io.github.kdbrian.pseudo.R
 import io.github.kdbrian.pseudo.ui.composables.NestedRootName
 import io.github.kdbrian.pseudo.ui.nav.LocalDefaultBackgroundBrush
+import io.github.kdbrian.pseudo.ui.nav.LocalTextStyle
 import io.github.kdbrian.pseudo.ui.theme.PseudoTheme
+import kotlin.random.Random
 
 @Composable
 fun MySaves(modifier: Modifier = Modifier) {
@@ -28,7 +39,8 @@ fun MySaves(modifier: Modifier = Modifier) {
     ) {
 
         Row(
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
 
             IconButton(onClick = {}) {
@@ -48,6 +60,32 @@ fun MySaves(modifier: Modifier = Modifier) {
                 contentDescription = null
             )
 
+        }
+
+        Spacer(Modifier.height(8.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            Text(
+                text = "Your saves",
+                style = LocalTextStyle.current.copy(
+                    fontSize = 26.sp,
+                )
+            )
+
+            Spacer(Modifier.weight(1f))
+
+            TextButton(onClick = {}) {
+                Text(
+                    text = LoremIpsum(Random.nextInt(2, 5)).values.joinToString(),
+                    style = LocalTextStyle.current.copy(
+                        color = Color.Yellow,
+                        fontSize = 12.sp
+                    )
+                )
+            }
         }
 
     }
