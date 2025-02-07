@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Icon
@@ -36,6 +37,8 @@ fun MySaves(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxSize()
             .background(brush = LocalDefaultBackgroundBrush.current)
+            .padding(12.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
 
         Row(
@@ -88,6 +91,11 @@ fun MySaves(modifier: Modifier = Modifier) {
             }
         }
 
+        Spacer(Modifier.height(8.dp))
+
+        repeat(10) {
+            SavedItemLoading()
+        }
     }
 }
 
