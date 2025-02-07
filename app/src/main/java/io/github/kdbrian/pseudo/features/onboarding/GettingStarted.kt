@@ -4,8 +4,10 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -34,7 +36,7 @@ import io.github.kdbrian.pseudo.ui.theme.PseudoTheme
 fun GettingStarted(modifier: Modifier = Modifier) {
 
     val labels = listOf(
-        "Seems You are new here.",
+        "Seems You are new here. Let's get started",
         "Pseudo notes is a platform for sharing pseudocode to other devs.",
         "Join the fun and avoid cheating."
     )
@@ -45,8 +47,10 @@ fun GettingStarted(modifier: Modifier = Modifier) {
             .background(brush = LocalDefaultBackgroundBrush.current)
     ) {
 
+        Spacer(Modifier.height(30.dp))
+
         LoadingLogo(
-            modifier = Modifier.size(100.dp).align(Alignment.TopCenter).padding(vertical = 12.dp)
+            modifier = Modifier.size(100.dp).align(Alignment.TopCenter).padding(vertical = 16.dp)
         )
 
         val state = rememberPagerState { labels.size }
