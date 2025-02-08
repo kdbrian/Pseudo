@@ -1,4 +1,4 @@
-package io.github.kdbrian.pseudo.features.profile
+package io.github.kdbrian.pseudo.features.groups
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
