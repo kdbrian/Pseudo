@@ -61,16 +61,17 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
-
     implementation(libs.androidx.constraintlayout.compose)
-
     implementation(libs.androidx.animation.android)
 
+    //serialization
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.androidx.navigation.compose)
 
-//    implementation(libs.richeditor.compose)
-
+    //rich editor and markdown
+    implementation(libs.richeditor.compose)
     implementation(libs.compose.markdown)
+
+    implementation(libs.colorpicker.compose)
 
 }

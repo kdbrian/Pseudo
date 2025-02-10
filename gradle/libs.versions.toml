@@ -1,6 +1,7 @@
 [versions]
 agp = "8.7.3"
 animationAndroid = "1.7.7"
+colorpickerCompose = "1.1.2"
 composeMarkdown = "0.5.6"
 constraintlayoutCompose = "1.1.0"
 kotlin = "2.0.0"
@@ -21,6 +22,7 @@ androidx-animation-android = { module = "androidx.compose.animation:animation-an
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+colorpicker-compose = { module = "com.github.skydoves:colorpicker-compose", version.ref = "colorpickerCompose" }
 compose-markdown = { module = "com.github.jeziellago:compose-markdown", version.ref = "composeMarkdown" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
