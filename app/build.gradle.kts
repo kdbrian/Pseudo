@@ -79,5 +79,6 @@ dependencies {
     implementation(libs.voyager.navigator)
     implementation(libs.voyager.tabNavigator)
 
+    implementation(libs.androidx.datastore)
 
 }
