@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import cafe.adriel.voyager.core.screen.Screen
 import io.github.kdbrian.pseudo.features.catalogue.MyFeedScreen
 import io.github.kdbrian.pseudo.features.catalogue.TrendingScreen
 import io.github.kdbrian.pseudo.features.home.composables.HomeBottomBar
@@ -27,77 +28,78 @@ import io.github.kdbrian.pseudo.features.home.composables.HomeTopAppBar
 import io.github.kdbrian.pseudo.ui.nav.LocalDefaultBackgroundBrush
 import io.github.kdbrian.pseudo.ui.theme.PseudoTheme
 
-@Composable
-fun HomeScreen(
-    modifier: Modifier = Modifier,
+object HomeScreen : Screen {
 
-    ) {
+    @Composable
+    override fun Content() {
 
-    val navController = rememberNavController()
-    var currentTab by remember {
-        mutableIntStateOf(0)
-    }
-    val tabs = listOf(
-        "Trending",
-        "Feed"
-    )
-
-
-    Scaffold(
-        modifier = Modifier
-            .background(brush = LocalDefaultBackgroundBrush.current),
-        topBar = {
-            HomeTopAppBar()
-        },
-        bottomBar = {
-            HomeBottomBar(navController = navController)
+        val navController = rememberNavController()
+        var currentTab by remember {
+            mutableIntStateOf(0)
         }
+        val tabs = listOf(
+            "Trending",
+            "Feed"
+        )
 
-    ) { paddingValues ->
 
-        Column(
+        Scaffold(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .background(brush = LocalDefaultBackgroundBrush.current)
-        ) {
+                .background(brush = LocalDefaultBackgroundBrush.current),
+            topBar = {
+                HomeTopAppBar()
+            },
+            bottomBar = {
+                HomeBottomBar(navController = navController)
+            }
 
+        ) { paddingValues ->
 
-            TabRow(
-                selectedTabIndex = currentTab,
-                modifier = Modifier.fillMaxWidth(),
-                indicator = {
-                }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .background(brush = LocalDefaultBackgroundBrush.current)
             ) {
 
-                tabs.forEachIndexed { index, tab ->
-                    Tab(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(12.dp),
-                        selected = index == currentTab,
-                        onClick = { currentTab = index },
-                        text = {
-                            Text(
-                                text = tab,
-                                style = LocalTextStyle.current.copy(
-                                    color = Color.DarkGray
+
+                TabRow(
+                    selectedTabIndex = currentTab,
+                    modifier = Modifier.fillMaxWidth(),
+                    indicator = {
+                    }
+                ) {
+
+                    tabs.forEachIndexed { index, tab ->
+                        Tab(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp),
+                            selected = index == currentTab,
+                            onClick = { currentTab = index },
+                            text = {
+                                Text(
+                                    text = tab,
+                                    style = LocalTextStyle.current.copy(
+                                        color = Color.DarkGray
+                                    )
                                 )
-                            )
-                        }
-                    )
+                            }
+                        )
+                    }
+
                 }
 
+                when (currentTab) {
+                    0 -> TrendingScreen()
+                    1 -> MyFeedScreen()
+                    else -> throw IllegalStateException()
+                }
+
+
             }
-
-            when (currentTab) {
-                0 -> TrendingScreen()
-                1 -> MyFeedScreen()
-                else -> throw IllegalStateException()
-            }
-
-
         }
+
     }
 
 }
@@ -106,6 +108,6 @@ fun HomeScreen(
 @Composable
 private fun HomeScreenPrev() {
     PseudoTheme {
-        HomeScreen()
+//        HomeScreen()
     }
 }

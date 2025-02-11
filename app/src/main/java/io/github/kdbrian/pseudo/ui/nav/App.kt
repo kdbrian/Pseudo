@@ -39,7 +39,7 @@ val LocalFontFamily = staticCompositionLocalOf {
 
 val LocalTextStyle = staticCompositionLocalOf {
     TextStyle(
-        fontSize = 16.sp,
+        fontSize = 20.sp,
         fontFamily = fredoka
     )
 }

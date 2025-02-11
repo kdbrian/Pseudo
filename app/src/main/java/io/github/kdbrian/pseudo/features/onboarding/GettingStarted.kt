@@ -23,6 +23,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
+import io.github.kdbrian.pseudo.features.auth.SignUp
 import io.github.kdbrian.pseudo.ui.composables.DisplayCard
 import io.github.kdbrian.pseudo.ui.composables.LoadingLogo
 import io.github.kdbrian.pseudo.ui.composables.TextLogo
@@ -34,6 +37,9 @@ object GettingStarted : Screen {
 
     @Composable
     override fun Content() {
+
+        val navigator = LocalNavigator.currentOrThrow
+
         val labels = listOf(
             "Seems You are new here. Let's get started",
             "Pseudo notes is a platform for sharing pseudocode to other devs.",
@@ -88,7 +94,9 @@ object GettingStarted : Screen {
                 )
 
                 IconButton(
-                    onClick = {},
+                    onClick = {
+                        navigator.push(SignUp())
+                    },
                     modifier = Modifier.background(
                         brush = LocalDefaultBackgroundBrush.current,
                         shape = CircleShape
