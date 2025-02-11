@@ -16,6 +16,8 @@ composeBom = "2024.04.01"
 navigationCompose = "2.8.6"
 richeditorCompose = "1.0.0-rc10"
 secretsGradlePlugin = "2.0.1"
+voyager = "1.1.0-beta02"
+
 
 [libraries]
 androidx-animation-android = { module = "androidx.compose.animation:animation-android", version.ref = "animationAndroid" }
@@ -40,6 +42,10 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 richeditor-compose = { module = "com.mohamedrejeb.richeditor:richeditor-compose", version.ref = "richeditorCompose" }
 secrets-gradle-plugin = { module = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
+voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
+voyager-tabNavigator = { module = "cafe.adriel.voyager:voyager-tab-navigator", version.ref = "voyager" }
+voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

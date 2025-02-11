@@ -27,6 +27,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.navigator.Navigator
 import io.github.kdbrian.pseudo.ui.theme.PseudoTheme
 import io.github.kdbrian.pseudo.ui.theme.appBlue
 import io.github.kdbrian.pseudo.ui.theme.appDark
@@ -62,17 +63,14 @@ val LocalTextStyle = staticCompositionLocalOf {
 }
 
 @Composable
-fun App(
-    modifier: Modifier = Modifier,
-) {
+fun App() {
     CompositionLocalProvider(
         LocalDefaultBackgroundBrush provides RedDarkBackgroundBrush,
         LocalFontFamily provides fredoka,
         LocalTextStyle provides TextStyle(),
         LocalPremiumBrush provides PremiumColorsBrush
     ) {
-
-
+//        Navigator()
     }
 
 }
