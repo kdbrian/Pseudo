@@ -19,63 +19,75 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import io.github.kdbrian.pseudo.ui.composables.LoadingLogo
 import io.github.kdbrian.pseudo.ui.nav.LocalDefaultBackgroundBrush
 import io.github.kdbrian.pseudo.ui.composables.TextLogo
 import io.github.kdbrian.pseudo.ui.theme.PseudoTheme
 
-@Composable
-fun OnBoardingScreen(
-    modifier: Modifier = Modifier,
-    onGetStarted : () -> Unit ={}
-) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(brush = LocalDefaultBackgroundBrush.current),
-    ) {
-        LoadingLogo(
-            modifier = Modifier
-                .width(150.dp)
-                .align(Alignment.Center)
-        )
 
-        Row(
+object OnBoardingScreen : Screen {
+
+    @Composable
+    override fun Content() {
+
+        val navigator = LocalNavigator.currentOrThrow
+
+        Box(
             modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(horizontal = 24.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .fillMaxSize()
+                .background(brush = LocalDefaultBackgroundBrush.current),
         ) {
-
-            TextLogo(
+            LoadingLogo(
                 modifier = Modifier
-                    .offset(x = 18.dp, y = 6.dp)
-                    .weight(1f)
+                    .width(150.dp)
+                    .align(Alignment.Center)
             )
 
-            IconButton(
-                onClick = onGetStarted,
-                modifier = Modifier.background(
-                    brush = LocalDefaultBackgroundBrush.current,
-                    shape = CircleShape
-                )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(horizontal = 24.dp),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
-                    contentDescription = null,
-                    modifier = Modifier.size(35.dp)
-                )
-            }
 
+                TextLogo(
+                    modifier = Modifier
+                        .offset(x = 18.dp, y = 6.dp)
+                        .weight(1f)
+                )
+
+                IconButton(
+                    onClick = { navigator.push(GettingStarted) },
+                    modifier = Modifier.background(
+                        brush = LocalDefaultBackgroundBrush.current,
+                        shape = CircleShape
+                    )
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Rounded.KeyboardArrowRight,
+                        contentDescription = null,
+                        modifier = Modifier.size(35.dp)
+                    )
+                }
+
+            }
         }
+
     }
+
 }
+
+
+
 
 @Preview
 @Composable
 private fun OnBoardingScreenPrev() {
     PseudoTheme {
-        OnBoardingScreen()
+//        OnBoardingScreen()
     }
 }
