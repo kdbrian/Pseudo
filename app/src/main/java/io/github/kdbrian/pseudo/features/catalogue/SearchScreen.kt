@@ -45,6 +45,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
 import io.github.kdbrian.pseudo.R
 import io.github.kdbrian.pseudo.ui.nav.LocalDefaultBackgroundBrush
 import io.github.kdbrian.pseudo.ui.nav.LocalTextStyle
@@ -52,220 +54,228 @@ import io.github.kdbrian.pseudo.ui.theme.PseudoTheme
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SearchScreen(
-    modifier: Modifier = Modifier,
-    onRecentsCleared: () -> Unit = {},
-) {
 
-    val (query, setQuery) = remember { mutableStateOf("") }
-    var selectedTopic by remember { mutableIntStateOf(0) }
-    var showFilters by remember { mutableStateOf(false) }
+class SearchScreen(
+    private val onRecentsCleared: () -> Unit = {},
+) : Tab {
+    override val options: TabOptions
+        @Composable
+        get() = TabOptions(
+                index = 0u,
+                title = "Search",
+                icon = painterResource(R.drawable.search)
+            )
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(brush = LocalDefaultBackgroundBrush.current)
-            .padding(12.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+    @OptIn(ExperimentalMaterial3Api::class)
+    @Composable
+    override fun Content() {
+        val (query, setQuery) = remember { mutableStateOf("") }
+        var selectedTopic by remember { mutableIntStateOf(0) }
+        var showFilters by remember { mutableStateOf(false) }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(brush = LocalDefaultBackgroundBrush.current)
+                .padding(12.dp)
         ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
 
-            Text(
-                text = "Search",
-                style = LocalTextStyle.current.copy(
-                    fontSize = 48.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            )
-
-
-            Image(
-                painter = painterResource(R.drawable.search),
-                modifier = Modifier.size(30.dp),
-                contentDescription = null
-            )
-
-        }
-
-
-        Spacer(Modifier.height(12.dp))
-
-        OutlinedTextField(
-            value = query,
-            onValueChange = setQuery,
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(24.dp),
-            placeholder = {
                 Text(
-                    text = "type here",
-                    modifier = Modifier.fillMaxWidth(),
+                    text = "Search",
                     style = LocalTextStyle.current.copy(
-                        fontSize = 16.sp,
-                        textAlign = TextAlign.Center,
-                        color = Color.White
+                        fontSize = 48.sp,
+                        fontWeight = FontWeight.SemiBold
                     )
                 )
-            },
-            singleLine = true,
-            textStyle = LocalTextStyle.current.copy(
-                color = Color.White,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Normal
-            )
-        )
-
-        Spacer(Modifier.height(32.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "Recents",
-                style = LocalTextStyle.current.copy(
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
-            )
 
 
-            IconButton(onClick = onRecentsCleared) {
                 Image(
-                    painter = painterResource(R.drawable.clear),
+                    painter = painterResource(R.drawable.search),
                     modifier = Modifier.size(30.dp),
                     contentDescription = null
                 )
+
             }
 
-        }
 
-        Spacer(Modifier.height(12.dp))
+            Spacer(Modifier.height(12.dp))
 
-        Column {
-            repeat(6) {
-                if (it % 2 == 0) {
-                    RecentItem(
-                        action = {
-                            Text(
-                                text = "Even",
-                                style = LocalTextStyle.current.copy(
-                                    color = Color.Red,
-                                    fontStyle = FontStyle.Italic,
-                                    fontWeight = FontWeight.Normal,
-                                    fontSize = 12.sp
-                                )
-                            )
-                        }
-
+            OutlinedTextField(
+                value = query,
+                onValueChange = setQuery,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(24.dp),
+                placeholder = {
+                    Text(
+                        text = "type here",
+                        modifier = Modifier.fillMaxWidth(),
+                        style = LocalTextStyle.current.copy(
+                            fontSize = 16.sp,
+                            textAlign = TextAlign.Center,
+                            color = Color.White
+                        )
                     )
-                } else
-                    RecentItem()
-                Spacer(Modifier.height(7.dp))
-            }
-        }
-
-
-        Spacer(Modifier.height(12.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = "Topics",
-                style = LocalTextStyle.current.copy(
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.SemiBold
+                },
+                singleLine = true,
+                textStyle = LocalTextStyle.current.copy(
+                    color = Color.White,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Normal
                 )
             )
 
-            TextButton(onClick = {
-                showFilters = !showFilters
-            }) {
+            Spacer(Modifier.height(32.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
                 Text(
-                    text = "More",
+                    text = "Recents",
                     style = LocalTextStyle.current.copy(
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.SemiBold,
-                        color = Color.Blue
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.SemiBold
                     )
                 )
+
+
+                IconButton(onClick = onRecentsCleared) {
+                    Image(
+                        painter = painterResource(R.drawable.clear),
+                        modifier = Modifier.size(30.dp),
+                        contentDescription = null
+                    )
+                }
+
             }
 
+            Spacer(Modifier.height(12.dp))
 
-        }
-
-        LazyHorizontalStaggeredGrid(
-            rows = StaggeredGridCells.Fixed(3),
-            modifier = Modifier.fillMaxWidth(),
-            horizontalItemSpacing = 4.dp
-        ) {
-            items(count = 10) {
-                FilterChip(
-                    selected = selectedTopic == it,
-                    onClick = { selectedTopic = it },
-                    label = {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-
-                            AnimatedVisibility(selectedTopic == it) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Check,
-                                    contentDescription = null
+            Column {
+                repeat(6) {
+                    if (it % 2 == 0) {
+                        RecentItem(
+                            action = {
+                                Text(
+                                    text = "Even",
+                                    style = LocalTextStyle.current.copy(
+                                        color = Color.Red,
+                                        fontStyle = FontStyle.Italic,
+                                        fontWeight = FontWeight.Normal,
+                                        fontSize = 12.sp
+                                    )
                                 )
                             }
 
-                            Text(
-                                text = LoremIpsum(Random.nextInt(1, 4)).values.joinToString(),
-                                style = LocalTextStyle.current.copy(
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Light
-                                )
-                            )
-                        }
-                    },
-                    modifier = Modifier.wrapContentSize()
-                )
-            }
-        }
-
-        if (showFilters) {
-            val sheetState = rememberModalBottomSheetState()
-            val scope = rememberCoroutineScope()
-
-            ModalBottomSheet(
-                onDismissRequest = {
-                    scope.launch {
-                        sheetState.hide()
-                        showFilters = !showFilters
-                    }
+                        )
+                    } else
+                        RecentItem()
+                    Spacer(Modifier.height(7.dp))
                 }
-            ) {
-                FilterList(onFilterSelect = {})
             }
-        }
 
+
+            Spacer(Modifier.height(12.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = "Topics",
+                    style = LocalTextStyle.current.copy(
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                )
+
+                TextButton(onClick = {
+                    showFilters = !showFilters
+                }) {
+                    Text(
+                        text = "More",
+                        style = LocalTextStyle.current.copy(
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.SemiBold,
+                            color = Color.Blue
+                        )
+                    )
+                }
+
+
+            }
+
+            LazyHorizontalStaggeredGrid(
+                rows = StaggeredGridCells.Fixed(3),
+                modifier = Modifier.fillMaxWidth(),
+                horizontalItemSpacing = 4.dp
+            ) {
+                items(count = 10) {
+                    FilterChip(
+                        selected = selectedTopic == it,
+                        onClick = { selectedTopic = it },
+                        label = {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+
+                                AnimatedVisibility(selectedTopic == it) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Check,
+                                        contentDescription = null
+                                    )
+                                }
+
+                                Text(
+                                    text = LoremIpsum(Random.nextInt(1, 4)).values.joinToString(),
+                                    style = LocalTextStyle.current.copy(
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Light
+                                    )
+                                )
+                            }
+                        },
+                        modifier = Modifier.wrapContentSize()
+                    )
+                }
+            }
+
+            if (showFilters) {
+                val sheetState = rememberModalBottomSheetState()
+                val scope = rememberCoroutineScope()
+
+                ModalBottomSheet(
+                    onDismissRequest = {
+                        scope.launch {
+                            sheetState.hide()
+                            showFilters = !showFilters
+                        }
+                    }
+                ) {
+                    FilterList(onFilterSelect = {})
+                }
+            }
+
+
+        }
 
     }
-
 }
-
 
 
 @Preview
 @Composable
 private fun SearchScreenPrev() {
     PseudoTheme {
-        SearchScreen()
+        SearchScreen().Content()
     }
 }
 

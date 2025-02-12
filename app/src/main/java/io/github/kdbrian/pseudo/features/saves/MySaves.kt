@@ -23,6 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.navigator.tab.Tab
+import cafe.adriel.voyager.navigator.tab.TabOptions
 import io.github.kdbrian.pseudo.R
 import io.github.kdbrian.pseudo.ui.composables.NestedRootName
 import io.github.kdbrian.pseudo.ui.nav.LocalDefaultBackgroundBrush
@@ -30,71 +32,81 @@ import io.github.kdbrian.pseudo.ui.nav.LocalTextStyle
 import io.github.kdbrian.pseudo.ui.theme.PseudoTheme
 import kotlin.random.Random
 
-@Composable
-fun MySaves(modifier: Modifier = Modifier) {
+object MySaves : Tab {
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .background(brush = LocalDefaultBackgroundBrush.current)
-            .padding(12.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
+    override val options: TabOptions
+        @Composable
+        get() = TabOptions(
+            index = 2u,
+            title = "Saves"
+        )
 
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(6.dp)
+    @Composable
+    override fun Content() {
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(brush = LocalDefaultBackgroundBrush.current)
+                .padding(12.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
 
-            IconButton(onClick = {}) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
+
+                IconButton(onClick = {}) {
+                    Icon(
+                        imageVector = Icons.Rounded.Close,
+                        contentDescription = null
+                    )
+                }
+
+                NestedRootName(
+                    name = "localhost",
+                    modifier = Modifier.weight(1f)
+                )
+
                 Icon(
-                    imageVector = Icons.Rounded.Close,
+                    painter = painterResource(R.drawable.baseline_book_24),
                     contentDescription = null
                 )
+
             }
 
-            NestedRootName(
-                name = "localhost",
-                modifier = Modifier.weight(1f)
-            )
+            Spacer(Modifier.height(8.dp))
 
-            Icon(
-                painter = painterResource(R.drawable.baseline_book_24),
-                contentDescription = null
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
 
-        }
-
-        Spacer(Modifier.height(8.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-
-            Text(
-                text = "Your saves",
-                style = LocalTextStyle.current.copy(
-                    fontSize = 26.sp,
-                )
-            )
-
-            Spacer(Modifier.weight(1f))
-
-            TextButton(onClick = {}) {
                 Text(
-                    text = LoremIpsum(Random.nextInt(2, 5)).values.joinToString(),
+                    text = "Your saves",
                     style = LocalTextStyle.current.copy(
-                        color = Color.Yellow,
-                        fontSize = 12.sp
+                        fontSize = 26.sp,
                     )
                 )
+
+                Spacer(Modifier.weight(1f))
+
+                TextButton(onClick = {}) {
+                    Text(
+                        text = LoremIpsum(Random.nextInt(2, 5)).values.joinToString(),
+                        style = LocalTextStyle.current.copy(
+                            color = Color.Yellow,
+                            fontSize = 12.sp
+                        )
+                    )
+                }
             }
-        }
 
-        Spacer(Modifier.height(8.dp))
+            Spacer(Modifier.height(8.dp))
 
-        repeat(10) {
-            SavedItemLoading()
+            repeat(10) {
+                SavedItemLoading()
+            }
         }
     }
 }
@@ -103,6 +115,6 @@ fun MySaves(modifier: Modifier = Modifier) {
 @Composable
 private fun MySavesPrev() {
     PseudoTheme {
-        MySaves()
+        MySaves.Content()
     }
 }

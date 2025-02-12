@@ -25,7 +25,7 @@ fun HomeTopAppBar(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .background(brush = LocalDefaultBackgroundBrush.current)
-            .padding(12.dp),
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

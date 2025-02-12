@@ -1,102 +1,97 @@
 package io.github.kdbrian.pseudo.features.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.LocalTextStyle
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.navigation.compose.rememberNavController
 import cafe.adriel.voyager.core.screen.Screen
-import io.github.kdbrian.pseudo.features.catalogue.MyFeedScreen
-import io.github.kdbrian.pseudo.features.catalogue.TrendingScreen
-import io.github.kdbrian.pseudo.features.home.composables.HomeBottomBar
-import io.github.kdbrian.pseudo.features.home.composables.HomeTopAppBar
+import cafe.adriel.voyager.navigator.tab.CurrentTab
+import cafe.adriel.voyager.navigator.tab.TabNavigator
+import io.github.kdbrian.pseudo.features.catalogue.SearchScreen
+import io.github.kdbrian.pseudo.features.saves.MySaves
 import io.github.kdbrian.pseudo.ui.nav.LocalDefaultBackgroundBrush
 import io.github.kdbrian.pseudo.ui.theme.PseudoTheme
+import io.github.kdbrian.pseudo.ui.util.TabNavigationItem
 
 object HomeScreen : Screen {
+
 
     @Composable
     override fun Content() {
 
-        val navController = rememberNavController()
-        var currentTab by remember {
-            mutableIntStateOf(0)
-        }
-        val tabs = listOf(
-            "Trending",
-            "Feed"
-        )
+        TabNavigator(HomeScreenContent) { _ ->
 
-
-        Scaffold(
-            modifier = Modifier
-                .background(brush = LocalDefaultBackgroundBrush.current),
-            topBar = {
-                HomeTopAppBar()
-            },
-            bottomBar = {
-                HomeBottomBar(navController = navController)
-            }
-
-        ) { paddingValues ->
-
-            Column(
+            Scaffold(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .background(brush = LocalDefaultBackgroundBrush.current)
-            ) {
-
-
-                TabRow(
-                    selectedTabIndex = currentTab,
-                    modifier = Modifier.fillMaxWidth(),
-                    indicator = {
+                    .background(brush = LocalDefaultBackgroundBrush.current),
+//                topBar = {
+//                },
+                bottomBar = {
+                    BottomAppBar {
+                        TabNavigationItem(tab = SearchScreen())
+                        TabNavigationItem(tab = HomeScreenContent)
+                        TabNavigationItem(tab = MySaves)
                     }
+                }
+
+            ) { padding ->
+                Box(modifier = Modifier
+                    .fillMaxSize()
+                    .padding(padding)) {
+                    CurrentTab()
+                }
+
+                /*
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(paddingValues)
+                        .background(brush = LocalDefaultBackgroundBrush.current)
                 ) {
 
-                    tabs.forEachIndexed { index, tab ->
-                        Tab(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp),
-                            selected = index == currentTab,
-                            onClick = { currentTab = index },
-                            text = {
-                                Text(
-                                    text = tab,
-                                    style = LocalTextStyle.current.copy(
-                                        color = Color.DarkGray
+
+                    TabRow(
+                        selectedTabIndex = currentTab,
+                        modifier = Modifier.fillMaxWidth(),
+                        indicator = {
+                        }
+                    ) {
+
+                        tabs.forEachIndexed { index, tab ->
+                            Tab(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
+                                selected = index == currentTab,
+                                onClick = { currentTab = index },
+                                text = {
+                                    Text(
+                                        text = tab,
+                                        style = LocalTextStyle.current.copy(
+                                            color = Color.DarkGray
+                                        )
                                     )
-                                )
-                            }
-                        )
+                                }
+                            )
+                        }
+
                     }
 
+                    when (currentTab) {
+                        0 -> TrendingScreen()
+                        1 -> MyFeedScreen()
+                        else -> throw IllegalStateException()
+                    }
+
+
                 }
 
-                when (currentTab) {
-                    0 -> TrendingScreen()
-                    1 -> MyFeedScreen()
-                    else -> throw IllegalStateException()
-                }
-
-
+                 */
             }
         }
 
